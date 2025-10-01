@@ -115,8 +115,8 @@ class ApiClient:                                                                
            reraise=True)                                                        # After the final attempt, if it still fails → raise the exception so your program knows the request failed
 
 
-           
-                            
+
+
     def get(self, path, param):                                                 # here we are just defining what we need
         self._throttle()                                                        # it is calling the upper throttle code
         
@@ -130,15 +130,55 @@ class ApiClient:                                                                
         return r.json()                                                         # .json() = will just convert json fromate into python dict
 
 
-    def paginate(self, endpoint, page_param="page", per_page_param="limit",
-                 start_page=1, per_page=100, data_key="data"):
-        page = start_page
-        while True:
-            payload = self.get(endpoint, {page_param:page, per_page_param: per_page})
-            records = payload.get(data_key, [])
-            if not records:
-                break
-            for rec in records:
-                yield rec
-            page += 1
+    def paginate(self, endpoint, page_param="page", per_page_param="limit",     # here we are making a paginate func, think it as of www.api.exapmple/"page=1"
+                 start_page=1, per_page=100, data_key="data"):                  # "page " is where the paginate will do its operation
 
+                                                                                # endpoint = where to get data from 
+                                                                                # page_param = how to tell the API which page you want
+                                                                                # it is when you click next page in websites its shows url like www.api.example/page=2
+                                                                                # per_page_param = how to tell the API how many items per page, 
+                                                                                # per_page = how many items I want per page
+                                                                                
+                                                                                # per_page_param/ per_page is like a key and value
+                                                                                # per_page_param is key and per _page is value
+                                                                                # per_page_param = limit and per_page = 100
+                                                                                # so, key=value, limit=100
+
+
+                                                                                # start_page = which page to start from
+                                                                                # If you already fetched page 1, you could start at page 2: start_page=2
+
+                                                                                # data_key="data" = Where the actual list of items is in the API response.
+                                                                                # {"data": [{"id":1,"name":"Alice"}, {"id":2,"name":"Bob"}]}
+                                                                                # "data" is the key that holds the records.
+
+
+        page = start_page                                                       # We’re starting from the first page (usually 1).
+                                                                                # page keeps track of which page we are currently fetching.
+
+        while True:                                                             # This creates an infinite loop, but don’t worry — there’s a break inside to stop it.
+                                                                                # We use this because we don’t know in advance how many pages there are
+
+            payload = self.get(endpoint, {page_param:page, per_page_param: per_page})
+                                                                                # Sends query parameters to the API:
+                                                                                # if endpoint="launches", page_param="page", per_page_param="limit", page=1, per_page=100:
+                                                                                # GET https://api.example.com/launches?page=1&limit=100
+
+            records = payload.get(data_key, [])                                 # Extracts the list of items from the response.
+
+            if not records:                                                     # If the page is empty (no more data), stop the loop.      
+                break                                                           # This prevents the infinite loop from going forever.
+
+                                                                                
+                                                                               
+
+            for rec in records:                                                 # yield is like return, but instead of stopping the function completely, it pauses it and gives back a value.
+                                                                                # The next time you call the function, it resumes from where it left off.  
+                yield rec                                                       # If you have a lot of data (like thousands of API records), you don’t want to load everything into memory at once.
+
+                       
+
+
+            page += 1                                                           # Moves to the next page.
+                                                                                # On next iteration, API will get page=2, then page=3, and so on until no records lef
+  
