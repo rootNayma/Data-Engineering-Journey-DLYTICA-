@@ -1,0 +1,47 @@
+# What “logging” ??
+
+# Logging = writing messages about what your program is doing, while it runs.
+# Think of it as your program keeping a diary of events:
+
+# “Started ETL”
+# “Extracted 100 rows from API”
+# “Inserted 50 rows into database”
+# “Error: API returned 500”
+
+#These messages are logs, and “logging” is the system that records them.
+
+
+
+# Why do we need logging in ETL?
+
+# ETL pipelines can run for minutes, hours, or even days.
+# Without logs:
+# You won’t know if it worked.
+# You won’t know where it failed.
+# You can’t debug or monitor production pipelines.
+
+
+
+version: 1                                                                      # it is telling, hey "python" assign me version 1 logging format.
+formatters:                                                                     # Formatter = defines how a log message looks.
+  json:                                                                         # in json format
+
+    format: '{"t":"%(asctime)s","l":"%(levelname)s","m":"%(message)s","n":"%(name)s"}'
+                                                                                # t → timestamp (%(asctime)s)
+                                                                                # l → level (INFO, ERROR, etc.)
+                                                                                # m → the actual message
+                                                                                # n → logger name
+
+handlers:                                                                       # Handler = decides where your log messages are sent.
+  console:                                                                      # Console / terminal → you see logs on your screen
+    class: Logging.StreamHandler
+    formatter: json                                                             # like beforw it is following json format
+    level: INFO                                                                 # Level = decides minimum severity of messages to show.
+                                                                                # DEBUG < "INFO" < WARNING < ERROR < CRITICAL
+
+root:                                                                           # the default (top-level) logger
+  handlers: [console]
+  level: INFO                                                                   # Why do we need root if handler exists?
+                                                                                # Handlers just deliver logs
+                                                                                # Root logger controls which logs go to which handlers and can filter by level.
+                                                                                # Without root logger, a simple logging.info("message") might not know which handler to use
