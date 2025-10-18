@@ -9,7 +9,7 @@ CREATE INDEX idx_department_id ON employees(department_id);
 
 
 -- Check index size
---  pg_relation_size= built-in PostgreSQL function. It calculates the size (in bytes) of a table or index.
+--  pg_relation_size= built-in PostgreSQL function. It calculates the size (in bytes) of a table or index. In our case it is index
 -- pg_size_pretty = as name suggest. "Pretty" It converts the size in human readable way like in kB,MB, GB.
 -- note, this runs first (pg_relation_size('idx_department_id')) ------->   pg_size_pretty -----> as index_size;
 SELECT 
