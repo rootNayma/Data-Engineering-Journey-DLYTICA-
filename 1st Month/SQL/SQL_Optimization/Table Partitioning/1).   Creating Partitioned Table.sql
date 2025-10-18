@@ -48,10 +48,31 @@ CREATE TABLE sales_2024 PARTITION OF sales
 
 
 
+--  INSERT INTO sales (sale_date, customer_id, product_id, amount, region)
+           │
+           ▼
+-- ┌───────────────────┐
+-- │    Parent Table   │  <-- sales
+-- │ PARTITION BY sale_date
+-- └───────────────────┘
+           │
+           ▼  (checks sale_date)
+-- ┌───────────────┐
+-- │ sales_2023    │  <-- child partition
+-- │ 2023-06-10    │
+-- │ 101           │
+-- │ 5001          │
+-- │ 250.00        │
+-- │ USA           │
+-- └───────────────┘
+
+
+
+
 
 -- Verify partitions
 
--- do you remember, we did this in chapter 4). query with index too, that time it was for index now it is for table.
+-- do you remember, B-Tree Indexing chapter. we did this in section 4). query with index too, that time it was for index now it is for table.
 -- still let me tell you, this code is for seeing size of the table. to check whether our code worked or not, okay bayta chalo.
 
 
