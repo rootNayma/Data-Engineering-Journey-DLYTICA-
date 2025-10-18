@@ -14,3 +14,13 @@ EXPLAIN ANALYZE
 SELECT * 
 FROM employees 
 WHERE department_id = 25;
+
+
+
++---------------------+----------------------+
+|   WITHOUT INDEX     |      WITH INDEX      |
++---------------------+----------------------+
+| Time: 157 ms        | Time: 13.7 ms        |
+| Scan: Sequential    | Scan: Index          |
+| Rows: 1,000,000     | Rows: 20,000         |
++---------------------+----------------------+
