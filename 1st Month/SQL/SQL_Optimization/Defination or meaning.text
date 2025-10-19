@@ -1,0 +1,48 @@
+What is indexing ??
+Indexing is a method to eliminate all the irrelevent rows to save time and storage which only scans needed rows or data, it is done in row-level inside table.
+Thik hai bhai, row-level yaad kariyo.
+
+What is Partition ??
+Partition is a method which will splits one big table into samll pieces of table and doesnt scans data itself it needs help of pruning.
+help of pruning what you mean-- ruuko jara sabar karo, i will expalin
+
+What is Prunning ??
+Prunning is a sub method of partition which will eliminate all the irrelevent partitoned table which only scans the needed partitioned table only. 
+It is done in partitioned table-level. yaad kariyo 
+Without partition there is no prunning,  it is like a new couple without him she doesnt eat food, and without her he doesnt eat food. 
+Partition + Prunning = Love Forever
+
+======================================================================================================================================================================================================
+
+Now lets do a Summary,
+
+Partitioning
+What it does                    : Splits a big table into smaller tables (partitions).
+What it doesn’t do              : It does not scan or filter data.
+Purpose                         : Enables pruning and better management of large datasets.
+
+Pruning
+What it does                    : At query time, decides which partitions to scan.
+How it works                    : Only scans the partitions that could possibly contain matching rows.
+Level                           : Partition-level (skips whole tables).
+Depends on                      : The table being partitioned.
+
+Index
+What it does                    : Speeds up row-level lookups inside a table or partition.
+Level                           : Row-level (inside a table).
+Independent of partitions       : You can use an index on a normal table or a partitioned table.
+======================================================================================================================================================================================================
+
+
+ruk bahi ruk, aabhi baaki hai.
+Lets Visualize it,  suppose you need book 2023
+
+
+Partition	----------------------> Each floor = collection of books,           book2020, book2021, book2023, book2024
+
+Pruning	------------------------> Go only to the floor which has book2023,    Then skip all other floors.
+
+Index --------------------------> On that floor, use a catalog to open the door and grap exact book you needed.  Gotcha book2023.
+
+
+
