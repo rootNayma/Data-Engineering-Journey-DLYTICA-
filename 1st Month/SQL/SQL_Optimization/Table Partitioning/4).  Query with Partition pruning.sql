@@ -14,3 +14,13 @@ SELECT COUNT(*), AVG(amount)
 FROM sales 
 WHERE sale_date BETWEEN '2024-01-01' AND '2024-12-31' --------------> "sale_date"
   AND customer_id = 50000;
+
+
++--------------------------------+--------------------------------+
+| Without Pruning                | With Pruning                   |
++--------------------------------+--------------------------------+
+| Time: 857 ms                   | Time: 171 ms                   |
+| Partitions Scanned: 5          | Partitions Scanned: 1          |
+| Rows Checked: 5 Million        | Rows Checked: 1 Million        |
+| Performance: -                 | Performance: 5x Faster         |
++--------------------------------+--------------------------------+
