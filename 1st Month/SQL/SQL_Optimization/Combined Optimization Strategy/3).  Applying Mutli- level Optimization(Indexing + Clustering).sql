@@ -1,4 +1,8 @@
 -- Bhai abhi tak toh indexing, clustering yaad hogaya hoga na.,\
+-- why are we indexing is coloumns, bruh really. we have always indexed in columns, we cant do indexing in table.
+-- indexing is done in row-level dat level.
+
+
 
 -- Step 1: Create indexes on parent (applied to all partitions)
 CREATE INDEX idx_oh_customer ON order_history(customer_id);
